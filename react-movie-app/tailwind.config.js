@@ -6,6 +6,10 @@ module.exports = {
       fontFamily: {
         body: ["DM Sans", "sans-serif"],
       },
+      colors: {
+        primary: "#FF3E71",
+        secondary: "#6F5CF1",
+      },
     },
   },
   plugins: [],

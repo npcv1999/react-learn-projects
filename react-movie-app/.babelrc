@@ -6,7 +6,10 @@
         "root": ["./src"],
         "alias": {
           "*": ".",
-          "@components": "./src/components"
+          "@components": "./src/components",
+          "@apis": ["./src/apis"],
+          "@utils": ["./src/utils"],
+          "@pages": ["./src/pages"]
         }
       }
     ]

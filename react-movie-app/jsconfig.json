@@ -1,8 +1,14 @@
 {
   "compilerOptions": {
+    "target": "ES6",
+    "allowJs": true,
+    "moduleResolution": "node",
     "baseUrl": "./src/",
     "paths": {
-      "@components/*": ["components/*"]
+      "@components": ["components/index.js"],
+      "@apis": ["apis/index.js"],
+      "@utils": ["utils/index.js"],
+      "@pages": ["pages/index.js"]
     }
   }
 }

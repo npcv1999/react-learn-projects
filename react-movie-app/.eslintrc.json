@@ -1,30 +1,42 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "jest": true
-  },
-  "extends": ["plugin:react/recommended", "airbnb"],
-  "overrides": [],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "plugins": ["react"],
   "parserOptions": {
+    "ecmaVersion": 2016,
+    "sourceType": "module",
     "ecmaFeatures": {
       "jsx": true
-    },
-    "ecmaVersion": "latest",
-    "sourceType": "module"
-  },
-  "plugins": ["react"],
-  "rules": {
-    "react/react-in-jsx-scope": "off",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
-    "quotes": "off"
-  },
-  "settings": {
-    "import/resolver": {
-      "babel-module": {
-        "allowExistingDirectories": true
-      }
     }
+  },
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "globals": {
+    "localStorage": true,
+    "ga": true,
+    "fetch": true,
+    "window": true,
+    "document": true,
+    "Raven": true,
+    "ENV": true
+  },
+  "rules": {
+    "import/prefer-default-export": "off",
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": "off",
+    "no-console": 0,
+    "react/sort-comp": [
+      1,
+      {
+        "order": [
+          "type-annotations",
+          "static-methods",
+          "lifecycle",
+          "everything-else",
+          "render"
+        ]
+      }
+    ]
   }
 }
