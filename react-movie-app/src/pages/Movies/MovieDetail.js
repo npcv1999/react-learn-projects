@@ -1,3 +1,4 @@
+import { BASE_URL } from "@apis";
 import { MovieList } from "@components";
 import { convertImage } from "@utils";
 import { fetcher } from "config";
@@ -6,16 +7,9 @@ import useSWR from "swr";
 
 const MovieDetailPage = () => {
   const { movieId } = useParams();
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movieId}?api_key=${process.env.REACT_APP_API_KEY}`,
-    fetcher
-  );
+  const { data } = useSWR(BASE_URL.MOVIE_DETAIL(movieId), fetcher);
 
   const { backdrop_path, poster_path, title, genres, overview } = data || {};
-
-  console.log("====================================");
-  console.log("daad", data);
-  console.log("====================================");
 
   return (
     data && (
@@ -64,7 +58,7 @@ export default MovieDetailPage;
 
 function MovieCredits({ movie_id }) {
   const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movie_id}/credits?api_key=${process.env.REACT_APP_API_KEY}`,
+    BASE_URL.MOVIE_METADATA(movie_id, "credits"),
     fetcher
   );
 
@@ -78,7 +72,7 @@ function MovieCredits({ movie_id }) {
           <div
             key={item.id}
             className={
-              "flex flex-col items-center border rounded-md p-2 hover:scale-110 transition-all"
+              "flex flex-col items-center border border-primary rounded-md p-2 hover:scale-110 transition-all"
             }
           >
             <img
@@ -86,7 +80,7 @@ function MovieCredits({ movie_id }) {
               src={convertImage(item.profile_path)}
               alt=""
             />
-            <span className="text-white">{item.name}</span>
+            <span className="text-white text-center">{item.name}</span>
           </div>
         ))}
       </div>
@@ -95,10 +89,7 @@ function MovieCredits({ movie_id }) {
 }
 
 function MovieVideos({ movie_id }) {
-  const { data } = useSWR(
-    `https://api.themoviedb.org/3/movie/${movie_id}/videos?api_key=${process.env.REACT_APP_API_KEY}`,
-    fetcher
-  );
+  const { data } = useSWR(BASE_URL.MOVIE_METADATA(movie_id, "videos"), fetcher);
   if (!data) return null;
   const { results } = data || {};
   if (results && results.length < 1) return null;
@@ -129,9 +120,7 @@ function MovieSimilar({ movie_id }) {
   return (
     <div className="my-5">
       <h2 className="text-white text-2xl font-bold my-3">Similar Movies</h2>
-      <MovieList
-        baseUrl={`https://api.themoviedb.org/3/movie/${movie_id}/similar?api_key=${process.env.REACT_APP_API_KEY}`}
-      />
+      <MovieList baseUrl={BASE_URL.MOVIE_METADATA(movie_id, "similar")} />
     </div>
   );
 }

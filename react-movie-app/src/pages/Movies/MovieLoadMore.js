@@ -1,34 +1,29 @@
 import { BASE_URL } from "@apis";
-import { Loading, MovieCard } from "@components";
+import { Button, Loading, MovieCard } from "@components";
 import { fetcher } from "config";
-import { useEffect } from "react";
 import { useState } from "react";
-import useSWR from "swr";
-import ReactPaginate from "react-paginate";
-
-const MoviePage = () => {
+import useSWRInfinite from "swr/infinite";
+const PAGE_SIZE = 20;
+const MovieLoadMore = () => {
   const [query, setQuery] = useState("");
-  const [nextPage, setNextPage] = useState(1);
 
   const [url, setUrl] = useState(`${BASE_URL.UP_COMING}`);
 
-  const { data, isLoading } = useSWR(url, fetcher);
-
-  const { total_pages } = data || {};
-  const movies = data?.results || [];
+  const { data, size, setSize, isLoading } = useSWRInfinite(
+    (index) => `${url}&page=${index + 1}`,
+    fetcher
+  );
 
   const handleSearch = () => {
-    setNextPage(1);
     setUrl(`${BASE_URL.SEARCH}${query}`);
   };
 
-  useEffect(() => {
-    if (query.length > 0) {
-      setUrl(`${BASE_URL.SEARCH}${query}&page=${nextPage}`);
-    } else {
-      setUrl(`${BASE_URL.UP_COMING}&page=${nextPage}`);
-    }
-  }, [nextPage]);
+  const movies = data ? data.reduce((a, b) => a.concat(b.results), []) : [];
+  const isLoadingMore =
+    isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
+  const isEmpty = data?.[0]?.results.length === 0;
+  const isReachingEnd =
+    isEmpty || (data && data[data.length - 1]?.results.length < PAGE_SIZE);
 
   return (
     <div className="px-10">
@@ -65,41 +60,23 @@ const MoviePage = () => {
               <MovieCard key={movie.id} item={movie} />
             ))}
           </div>
+          {!isReachingEnd && (
+            <div className="text-center my-4">
+              {isLoadingMore ? (
+                <Loading />
+              ) : (
+                <Button onClick={() => setSize(size + 1)}>Load more</Button>
+              )}
+            </div>
+          )}
         </>
       ) : (
         <h2 className="text-white text-2xl text-center w-full">
           Can not find any movie match this keyword, please try again ...
         </h2>
       )}
-
-      <MoviePagination
-        itemsPerPage={movies.length}
-        total_pages={total_pages}
-        nextPage={nextPage}
-        setNextPage={setNextPage}
-      />
     </div>
   );
 };
 
-export default MoviePage;
-
-function MoviePagination({ setNextPage, total_pages }) {
-  const handlePageClick = (event) => {
-    setNextPage(event.selected + 1);
-  };
-  return (
-    <div className="my-5">
-      <ReactPaginate
-        breakLabel="..."
-        nextLabel=">"
-        onPageChange={handlePageClick}
-        pageRangeDisplayed={5}
-        pageCount={Math.ceil(total_pages) | 0}
-        previousLabel="<"
-        renderOnZeroPageCount={null}
-        className="pagination"
-      />
-    </div>
-  );
-}
+export default MovieLoadMore;

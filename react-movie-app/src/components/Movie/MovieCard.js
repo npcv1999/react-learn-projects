@@ -1,4 +1,5 @@
 import { convertImage } from "@utils";
+import { Button } from "components";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -33,12 +34,12 @@ const MovieCard = ({ item }) => {
         </div>
       </div>
 
-      <button
+      <Button
         onClick={() => navigate(`/movie/${id}`)}
-        className="bg-primary text-white p-3 rounded-lg w-full font-bold mt-auto"
+        className=" p-3 rounded-lg w-full font-bold mt-auto"
       >
         Watch now
-      </button>
+      </Button>
     </div>
   );
 };

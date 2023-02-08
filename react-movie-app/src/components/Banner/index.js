@@ -5,6 +5,8 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper";
 import { convertImage } from "@utils";
+import { Button } from "components/Button";
+import { useNavigate } from "react-router-dom";
 
 export const Banner = () => {
   const { data } = useSWR(BASE_URL.UP_COMING, fetcher);
@@ -35,7 +37,8 @@ export const Banner = () => {
 };
 
 const BannerItem = ({ item }) => {
-  const { title, poster_path } = item;
+  const { title, poster_path, id } = item;
+  const navigate = useNavigate();
   return (
     <div className="w-full h-full bg-white rounded-lg overflow-hidden relative">
       <div className="overplay absolute inset-0 bg-gradient-to-t from-[rgba(0,0,0,0.8)] to-[rgba(255,255,255,0)]"></div>
@@ -44,19 +47,19 @@ const BannerItem = ({ item }) => {
         src={convertImage(poster_path)}
         alt=""
       />
-      <div className="content absolute bottom-4 left-5 text-white flex flex-col gap-y-7">
+      <div className="content absolute bottom-4 left-5 text-white w-full">
         <h2 className="font-boid text-3xl">{title}</h2>
-        <div className="category flex gap-x-3">
+        <div className="category flex gap-x-3 my-4">
           <span className="border border-white p-2 rounded-md">Action</span>
           <span className="border border-white p-2 rounded-md">Adventure</span>
           <span className="border border-white p-2 rounded-md">Drama</span>
         </div>
-        <button
-          className="bg-primary p-3 rounded-md text-xl max-w-[200px]"
-          type="button"
+        <Button
+          onClick={() => navigate(`/movie/${id}`)}
+          className="p-3 text-xl"
         >
           Watch now
-        </button>
+        </Button>
       </div>
     </div>
   );
