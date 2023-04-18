@@ -1,0 +1,17 @@
+{
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "root": ["./src"],
+        "alias": {
+          "@components": "./components/index.ts",
+          "@apis": "./apis/index.ts",
+          "@utils": "./utils/index.ts",
+          "@pages": "./pages/index.ts",
+          "@contexts": "./contexts/index.ts"
+        }
+      }
+    ]
+  ]
+}
