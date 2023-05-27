@@ -21,7 +21,8 @@
       "@apis": ["apis/index.ts"],
       "@utils": ["utils/index.ts"],
       "@pages": ["pages/index.ts"],
-      "@contexts": ["contexts/index.ts"]
+      "@contexts": ["contexts/index.ts"],
+      "@firebaseConfig": ["firebaseConfig/index.ts"]
     }
   },
   "include": ["src"],

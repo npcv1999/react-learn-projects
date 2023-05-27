@@ -11,6 +11,10 @@ export default defineConfig({
       "@utils": path.resolve(__dirname, "./src/utils/index.ts"),
       "@pages": path.resolve(__dirname, "./src/pages/index.ts"),
       "@contexts": path.resolve(__dirname, "./src/contexts/index.ts"),
+      "@firebaseConfig": path.resolve(
+        __dirname,
+        "./src/firebaseConfig/index.ts"
+      ),
     },
   },
 });
