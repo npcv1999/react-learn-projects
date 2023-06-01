@@ -127,7 +127,7 @@ const SignUp = () => {
 
           <button
             type="submit"
-            className="mt-[50px] bg-gradient-to-r from-gradient1 to-gradient2 h-[70px] max-w-[343px] mx-auto justify-center w-full rounded-lg text-white"
+            className="mt-[50px] bg-gradient-to-br from-gradient1 to-gradient2 h-[70px] max-w-[343px] mx-auto justify-center w-full rounded-lg text-white"
           >
             {isLoading ? <Loading /> : "Sign Up"}
           </button>

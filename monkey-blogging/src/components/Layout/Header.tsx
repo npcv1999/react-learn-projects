@@ -1,3 +1,5 @@
+import { useAuth } from "@contexts";
+import { PATHS_ROUTE, getLastName } from "@utils";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -17,6 +19,7 @@ const menuLinks = [
 ];
 
 const Header = () => {
+  const { user } = useAuth();
   return (
     <div className="">
       <div className="container">
@@ -48,9 +51,23 @@ const Header = () => {
                 className="object-contain absolute top-[50%] translate-y-[-50%] right-3"
               />
             </div>
-            <button className="sign-up w-full max-w-[200px] bg-primary text-white px-6 rounded-md">
-              Sign Up
-            </button>
+            {!user ? (
+              <NavLink
+                to={PATHS_ROUTE.register}
+                className={"sign-up w-full max-w-[200px]"}
+              >
+                <button className="w-full h-full bg-primary text-white px-6 rounded-md">
+                  Sign Up
+                </button>
+              </NavLink>
+            ) : (
+              <div className="header-auth max-w-[200px]">
+                <strong>Welcome back, </strong>
+                <span className="text-primary">
+                  {getLastName(user?.displayName as string)}
+                </span>
+              </div>
+            )}
           </div>
         </div>
       </div>
