@@ -24,7 +24,7 @@ const MovieList = ({ baseUrl }) => {
         }}
         modules={[Autoplay]}
       >
-        {results.length > 0 &&
+        {results?.length > 0 &&
           results.map((item) => (
             <SwiperSlide key={item.id}>
               <MovieCard item={item} />
